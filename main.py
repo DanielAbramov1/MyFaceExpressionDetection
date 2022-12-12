@@ -40,3 +40,13 @@ class VideoCamera(object):
             cv2.putText(fr, pred, (x, y), font, 1, (255, 255, 0), 2)
             cv2.rectangle(fr,(x,y),(x+w,y+h),(255,0,0),2)
         return fr
+    
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        cv2.imshow('Facial Expression Recognization',frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    cv2.destroyAllWindows()
+    
+gen(VideoCamera())
