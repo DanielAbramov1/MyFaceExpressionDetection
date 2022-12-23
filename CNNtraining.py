@@ -114,7 +114,7 @@ model.summary()
 
 
 # %%time
-epochs = 30 #TODO maybe change the epoch for more (for more accuracy)
+epochs = 6 #TODO maybe change the epoch for more (for more accuracy)
 steps_per_epoch = train_generator.n//train_generator.batch_size
 validation_steps = validation_generator.n//validation_generator.batch_size
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
