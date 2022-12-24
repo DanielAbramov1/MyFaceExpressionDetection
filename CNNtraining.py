@@ -13,17 +13,19 @@ from tensorflow.keras.utils import plot_model
 from IPython.display import SVG, Image
 from livelossplot.inputs.tf_keras import PlotLossesCallback
 import tensorflow as tf
+import globals_handler as gh
 print("Tensorflow version:", tf.__version__)
 
 #------------------------------------Training-------------------------------------------------#
-train_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/train/train/"
+train_path = "C:/Users/sahar/Documents/python/MyFaceExpressionDetection/train/train/"
+#train_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/train/train/"
 
 for expression in os.listdir(train_path):
    print(str(len(os.listdir(train_path + expression))) + " " + expression + " images")
    
    
 img_size = 48
-batch_size = 64
+batch_size = gh.MAX_BATCH_SIZE
 datagen_train = ImageDataGenerator(horizontal_flip=True)
 train_generator = datagen_train.flow_from_directory(train_path,
                                                     target_size=(img_size,img_size),
@@ -40,14 +42,16 @@ validation_generator = datagen_validation.flow_from_directory(train_path,
                                                     shuffle=False)
 
 #------------------------------------Test-------------------------------------------------#
-test_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/test/test/"
+test_path = "C:/Users/sahar/Documents/python/MyFaceExpressionDetection/test/test/"
+#test_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/test/test/"
+
 
 for expression in os.listdir(test_path):
    print(str(len(os.listdir(test_path + expression))) + " " + expression + " images")
    
    
 img_size = 48
-batch_size = 64
+batch_size = gh.MAX_BATCH_SIZE
 datagen_train = ImageDataGenerator(horizontal_flip=True)
 train_generator = datagen_train.flow_from_directory(test_path,
                                                     target_size=(img_size,img_size),
@@ -56,7 +60,7 @@ train_generator = datagen_train.flow_from_directory(test_path,
                                                     class_mode='categorical',
                                                     shuffle=True)
 datagen_validation = ImageDataGenerator(horizontal_flip=True)
-validation_generator = datagen_validation.flow_from_directory(train_path,
+validation_generator = datagen_validation.flow_from_directory(test_path,
                                                     target_size=(img_size,img_size),
                                                     color_mode="grayscale",
                                                     batch_size=batch_size,
@@ -120,7 +124,7 @@ model.summary()
 
 
 # %%time
-epochs = 15 #TODO maybe change the epoch for more (for more accuracy)
+epochs = gh.MAX_EPOCHS #TODO maybe change the epoch for more (for more accuracy)
 steps_per_epoch = train_generator.n//train_generator.batch_size
 validation_steps = validation_generator.n//validation_generator.batch_size
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
