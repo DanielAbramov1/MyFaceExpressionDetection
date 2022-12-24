@@ -90,6 +90,12 @@ model.add(BatchNormalization())
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
+# 5th Convolution layer
+model.add(Conv2D(512,(3,3), padding='same'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
 # Flattening
 model.add(Flatten())
 # Fully connected layer 1st layer
@@ -114,7 +120,7 @@ model.summary()
 
 
 # %%time
-epochs = 6 #TODO maybe change the epoch for more (for more accuracy)
+epochs = 15 #TODO maybe change the epoch for more (for more accuracy)
 steps_per_epoch = train_generator.n//train_generator.batch_size
 validation_steps = validation_generator.n//validation_generator.batch_size
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
