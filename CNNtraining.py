@@ -14,11 +14,11 @@ from IPython.display import SVG, Image
 from livelossplot.inputs.tf_keras import PlotLossesCallback
 import tensorflow as tf
 import globals_handler as gh
+
 print("Tensorflow version:", tf.__version__)
 
 #------------------------------------Training-------------------------------------------------#
-train_path = "C:/Users/sahar/Documents/python/MyFaceExpressionDetection/train/train/"
-#train_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/train/train/"
+train_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/train/train/"
 
 for expression in os.listdir(train_path):
    print(str(len(os.listdir(train_path + expression))) + " " + expression + " images")
@@ -42,9 +42,7 @@ validation_generator = datagen_validation.flow_from_directory(train_path,
                                                     shuffle=False)
 
 #------------------------------------Test-------------------------------------------------#
-test_path = "C:/Users/sahar/Documents/python/MyFaceExpressionDetection/test/test/"
-#test_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/test/test/"
-
+test_path = "C:/Users/Daniel/Documents/Python/MyFaceExpressionDetection/test/test/"
 
 for expression in os.listdir(test_path):
    print(str(len(os.listdir(test_path + expression))) + " " + expression + " images")
@@ -95,11 +93,11 @@ model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 # 5th Convolution layer
-model.add(Conv2D(512,(3,3), padding='same'))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
+# model.add(Conv2D(512,(3,3), padding='same'))
+# model.add(BatchNormalization())
+# model.add(Activation('relu'))
+# model.add(MaxPooling2D(pool_size=(2, 2)))
+# model.add(Dropout(0.25))
 # Flattening
 model.add(Flatten())
 # Fully connected layer 1st layer
@@ -124,7 +122,7 @@ model.summary()
 
 
 # %%time
-epochs = gh.MAX_EPOCHS #TODO maybe change the epoch for more (for more accuracy)
+epochs = gh.MAX_EPOCH #TODO maybe change the epoch (for more accuracy)
 steps_per_epoch = train_generator.n//train_generator.batch_size
 validation_steps = validation_generator.n//validation_generator.batch_size
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,

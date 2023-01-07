@@ -1,3 +1,3 @@
-MAX_EPOCHS = 15
-MAX_BATCH_SIZE = 16
+MAX_EPOCH = 46
+MAX_BATCH_SIZE = 48
 #add more globals
